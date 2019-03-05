@@ -1,0 +1,22 @@
+name: test-jamesh-webapp
+version: '0.1'
+summary: A simple test web application
+description: |
+  This is a simple web application written in Go, for use in
+  demonstrating Ubuntu Core.
+
+base: core18
+grade: stable
+confinement: strict
+
+apps:
+  webapp:
+    command: bin/test-jamesh-webapp
+    daemon: simple
+
+parts:
+  webapp:
+    plugin: go
+    go-importpath: github.com/jhenstridge/test-jamesh-webapp
+    source: .
+    source-type: git
