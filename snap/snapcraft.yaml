@@ -13,6 +13,9 @@ apps:
   webapp:
     command: bin/test-jamesh-webapp
     daemon: simple
+    plugs:
+      - network
+      - network-bind
 
 parts:
   webapp:
