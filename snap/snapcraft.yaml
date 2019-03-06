@@ -23,3 +23,5 @@ parts:
     go-importpath: github.com/jhenstridge/test-jamesh-webapp
     source: .
     source-type: git
+    build-packages:
+      - gcc
