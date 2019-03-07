@@ -17,6 +17,9 @@ apps:
     plugs:
       - network
       - network-bind
+    sockets:
+      web:
+        listen-stream: 8080
 
 parts:
   webapp:

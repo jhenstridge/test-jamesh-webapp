@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
 	"net/http"
+
+	"github.com/coreos/go-systemd/activation"
 )
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,6 +16,19 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Set up routes
 	http.HandleFunc("/", rootHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	// Receive listening socket from systemd
+	var listener net.Listener
+	if listeners, err := activation.Listeners(); err != nil {
+		log.Fatal(err)
+	} else if len(listeners) != 1 {
+		log.Fatal("Expected one socket activated file descriptor")
+	} else {
+		listener = listeners[0]
+	}
+
+	// Serve requests forever
+	log.Fatal(http.Serve(listener, nil))
 }
